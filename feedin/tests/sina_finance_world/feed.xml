@@ -1,0 +1,35 @@
+
+<feed id="sina_finance_world">
+	<Parsing>
+		<modules>
+			<module type="xpathfetchpage" id="xpathfetchpage" URL="http://finance.sina.com.cn/world/" ExtractXPath="//ul[@class='list_00f_f14']/li" />
+			<module type="rename" id='rename' input="xpathfetchpage">
+				<rules>
+					<rule source="item.a.href" operator="copy" dest="_id" />
+					<rule source="item.a.href" operator="rename" dest="url" />
+					<rule source="item.a.content" operator="rename" dest="title" />
+				</rules>
+			</module>
+			<module type="loop" id="loop" input="rename" ForEach="item" AssignTo="content">
+				<module type="xpathfetchpage" URL="item.url" ExtractXPath="//div[@id='artibody']" ExtractMethod="text" />
+			</module>
+			<module type="output" id="output" input="loop">
+				<fields>
+					<field name='title' />
+					<field name='url' />
+					<field name='content' />
+				</fields>
+			</module>
+			
+			<!-- specify output fields, output type (update only) -->
+			<!-- data in depth or not -->
+			<!-- other datatype than string -->
+		</modules>
+	</Parsing>
+	<Schedule>
+	
+	</Schedule>
+	<Push>
+	
+	</Push>
+</feed>

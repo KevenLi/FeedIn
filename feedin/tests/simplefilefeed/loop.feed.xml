@@ -1,0 +1,29 @@
+
+<feed id="guba_recent">
+	<Parsing>
+		<modules>
+
+			<module type="xpathfetchpage" id="xpathfetchpage" URL="http://guba.eastmoney.com/default_1.html" ExtractXPath="//ul[@class='newlist']/li" />
+			<module type="rename" id='rename' input="xpathfetchpage">
+				<rules>
+					<rule source="item.cite.0" operator="rename" dest="read" />
+					<rule source="item.cite.1" operator="rename" dest="comments" />
+					<rule source="item.span.a.1.title" operator="rename" dest="title" />
+					<rule source="item.span.a.1.href" operator="rename" dest="url" />
+					<rule source="item.span.a.0.content" operator="rename" dest="channel" />
+					<rule source="item.cite.2" operator="rename" dest="author" />
+				</rules>
+			</module>
+			<module type="loop" id="loop" input="rename" ForEach="item" AssignTo="pagedetail">
+				<module type="xpathfetchpage" URL="item.url" ExtractXPath="//div[@class='stockcodec']" ExtractMethod="text" />
+			</module>
+			<module type="output" id="output" input="loop" />
+		</modules>
+	</Parsing>
+	<Schedule>
+	
+	</Schedule>
+	<Push>
+	
+	</Push>
+</feed>
