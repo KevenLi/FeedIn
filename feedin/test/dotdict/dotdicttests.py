@@ -5,7 +5,7 @@ Created on 2014��11��21��
 @author: ���
 '''
 import unittest
-from feeding.dotdict2 import DotDict2
+from feedin.dotdict2 import DotDict2
 
 class Test(unittest.TestCase):
 

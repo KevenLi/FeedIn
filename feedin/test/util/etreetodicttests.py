@@ -6,7 +6,7 @@ Created on 2014��11��21��
 '''
 import unittest
 from lxml.etree import Element
-from feeding import util
+from feedin import util
 
 
 class Test(unittest.TestCase):

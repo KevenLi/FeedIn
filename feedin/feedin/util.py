@@ -6,7 +6,8 @@ import string
 from datetime import datetime
 from urllib2 import quote
 from os import path as p
-from pipe2py import Context
+from feedin.dotdict2 import DotDict2
+from feedin.model import Context
 
 try:
     from json import loads
@@ -94,6 +95,61 @@ def etree_to_dict(element):
             new = child.tail.strip() if child.tail else None
             content = _make_content(i, tag, new)
             i.update({tag: content}) if content else None
+    elif content and not set(i.keys()).difference(['content']):
+        # element is leaf node and doesn't have attributes
+        i = content
+
+    return i
+
+def etree_to_dict2(element, parent=None):
+    """Convert an eTree xml into dict imitating how Yahoo Pipes does it.
+
+    todo: further investigate white space and multivalue handling
+    """
+    i = DotDict2(element.attrib)
+    content = element.text.strip() if element.text else None
+    i.update({'content': content}) if content else None
+
+    if len(element.getchildren()):
+        for child in element.iterchildren():
+            if not isinstance(child.tag, basestring):
+                continue    # continue loop when the tag is <!-- comment -->
+            if child.tag == 'br':
+                content = content if content else ""
+                content = (content + "\r\n" + child.tail) if child.tail else content + "\r\n"
+                i.update({'content': content}) if content else None
+                continue
+            tag = child.tag.split('}', 1)[-1]
+            
+            new = etree_to_dict2(child, i)
+            #content = _make_content(i, tag, new)
+            if tag in i:
+                try:
+                    keys = i[tag].keys()
+                    keys.sort(lambda a,b : cmp(int(a),int(b)))
+                    if len(keys) == 0:
+                        i[tag] = new
+                    else:
+                        current_index = int(keys[-1])
+                        #i.move(tag, '%s.%d' %(tag, current_index))
+                        i['%s.%d' % (tag, current_index + 1)] = new
+                except KeyError:
+                    i[tag] = new
+                except ValueError:
+                    current_index = 0
+                    i.move(tag, '%s.%d' %(tag, current_index))
+                    i['%s.%d' % (tag, current_index + 1)] = new
+                except TypeError:
+                    current_index = 0
+                    i.move(tag, '%s.%d' %(tag, current_index))
+                    i['%s.%d' % (tag, current_index + 1)] = new
+                except AttributeError:
+                    current_index = 0
+                    i.move(tag, '%s.%d' %(tag, current_index))
+                    i['%s.%d' % (tag, current_index + 1)] = new
+            else:
+                i[tag] = new
+            
     elif content and not set(i.keys()).difference(['content']):
         # element is leaf node and doesn't have attributes
         i = content

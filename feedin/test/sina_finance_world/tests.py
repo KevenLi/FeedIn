@@ -5,13 +5,13 @@ Created on 2015��1��22��
 @author: ���
 '''
 import unittest
-import feeding.engine
+import feedin.engine
 
 
 class Test(unittest.TestCase):
     
     def setUp(self):
-        self.engine = feeding.engine.Engine()
+        self.engine = feedin.engine.Engine()
 
 
     def tearDown(self):

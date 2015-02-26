@@ -5,9 +5,9 @@ Created on 2014��11��28��
 @author: ���
 '''
 import unittest
-from feeding.modules.module import StringReplace
+from feedin.modules.module import StringReplace
 from xml.etree import ElementTree
-from feeding.model import Context
+from feedin.model import Context
 
 class StringReplaceTest(unittest.TestCase):
 

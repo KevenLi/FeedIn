@@ -5,9 +5,9 @@ Created on 2014��11��12��
 @author: ���
 '''
 import unittest
-from feeding.modules.module import XPathFetchPage
+from feedin.modules.module import XPathFetchPage
 from xml.etree import ElementTree
-from feeding.model import Context
+from feedin.model import Context
 
 class Test(unittest.TestCase):
 

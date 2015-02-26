@@ -5,7 +5,7 @@ Created on 2014��11��12��
 @author: ���
 '''
 import unittest
-import feeding.engine
+import feedin.engine
 
 
 class SimpleFileFeedTest(unittest.TestCase):
@@ -13,7 +13,7 @@ class SimpleFileFeedTest(unittest.TestCase):
     
     
     def setUp(self):
-        self.engine = feeding.engine.Engine()
+        self.engine = feedin.engine.Engine()
 
 
     def tearDown(self):

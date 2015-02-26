@@ -5,7 +5,7 @@ Created on 2014��11��12��
 @author: ���
 '''
 import unittest
-import feeding.engine
+import feedin.engine
 from elasticsearch import Elasticsearch
 import time
 

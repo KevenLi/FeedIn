@@ -7,9 +7,9 @@ Created on 2014��11��12��
 from urllib2 import urlopen
 from lxml import html
 from lxml import etree
-from feeding import util
-from feeding.dotdict2 import DotDict2
-from feeding.model import Context
+from feedin import util
+from feedin.dotdict2 import DotDict2
+from feedin.model import Context
 import urllib2
 import urlparse
 from StringIO import StringIO
