@@ -1,0 +1,32 @@
+{% extends 'search.html' %}
+
+{% block result %}
+	<table style=''  border="0" cellspacing="0" cellpadding="0">
+		<thead>
+			<tr>
+			<th>title</th>
+			<th>content</th>
+			<th>author</th>
+			<th>updatetime</th>
+			<th>channel</th>
+			<th>reads</th>
+			<th>comments</th>
+			</tr>
+		</thead>
+		<tbody>
+		
+		
+		{% for doc in hits %}
+			<tr>
+				<td><a href='{{doc.url}}'>{{doc.title}}</a></td>
+				<td>{{doc.content}}</td>
+				<td>{{doc.author}}</td>
+				<td>{{doc.updatetime}}</td>
+				<td>{{doc.channel}}</td>
+				<td>{{doc.read_count}}</td>
+				<td>{{doc.comment_count}}</td>
+			</tr>
+		{% endfor %}
+		</tbody>
+	</table>
+{% endblock %}

@@ -1,0 +1,7 @@
+<form method='post'>
+{% csrf_token %}
+<input name='keyword' value='{{keyword|default:""}}' />
+<input type='submit' value='搜索'>
+</form>
+{% block result %}
+{% endblock %}
