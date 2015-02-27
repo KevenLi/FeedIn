@@ -5,10 +5,10 @@ Created on 2014��12��3��
 @author: ���
 '''
 import unittest
-from feedin.modules.module import Output
+from feedin.modules import Output
 from xml.etree import ElementTree
-from feedin.model import Context
-from feedin.dotdict2 import DotDict2
+from feedin import Context
+from feedin import DotDict2
 
 
 class Test(unittest.TestCase):
