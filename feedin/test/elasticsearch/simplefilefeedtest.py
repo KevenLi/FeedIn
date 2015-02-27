@@ -5,9 +5,9 @@ Created on 2014��11��12��
 @author: ���
 '''
 import unittest
-import feedin.engine
 from elasticsearch import Elasticsearch
 import time
+from feedin import Engine;
 
 
 class SimpleFileFeedTest(unittest.TestCase):
@@ -16,7 +16,7 @@ class SimpleFileFeedTest(unittest.TestCase):
     
     def setUp(self):
         self.es = Elasticsearch()
-        self.engine = feeding.engine.Engine()
+        self.engine = Engine()
         
 
 
