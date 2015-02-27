@@ -12,7 +12,7 @@ class Loop(Module):
         self.assign_to = setting.get("AssignTo")
         self.module_setting = setting.find("module")
         engine = self._context['engine']
-        self.module = engine._module_factory.buildModule(self.module_setting)
+        self.module = engine._module_factory.buildModule(self.module_setting.get('type'), self.module_setting, None)
         
     def execute(self, context=None):
         for item in context.items:
