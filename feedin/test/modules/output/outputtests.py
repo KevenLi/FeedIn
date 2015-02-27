@@ -5,7 +5,7 @@ Created on 2014��12��3��
 @author: ���
 '''
 import unittest
-from feedin.modules import Output
+from feedin.modules import OutputBuilder
 from xml.etree import ElementTree
 from feedin import Context
 from feedin import DotDict2
@@ -24,7 +24,8 @@ class Test(unittest.TestCase):
         context = Context()
         context.items.append(item1)
         
-        self.target = Output(setting) 
+        builder = OutputBuilder()
+        self.target = builder.build(setting)
         self.target.execute(context)
         
         self.assertEqual(context.items[0]['a'], 'a content')
@@ -35,8 +36,8 @@ class Test(unittest.TestCase):
         doc.attrib['type'] = 'output'
         # attrib['depth'] default to 1, only output the first depth        
                 
-                
-        self.target = Output(doc)
+        builder = OutputBuilder()
+        self.target = builder.build(doc)
         context = Context()
         item = DotDict2() # dict item
         item['a.1.b'] = 'd'

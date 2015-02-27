@@ -37,6 +37,7 @@ class Test(unittest.TestCase):
         self.assertEqual(target['a']['2'], 2)
         try:
             v = target['a']['1']
+            self.assertIsNotNone(v)
             self.fail("Key should not be found")
         except KeyError:
             pass
@@ -51,6 +52,7 @@ class Test(unittest.TestCase):
         
         try:
             v = target['b']   # since b.1, b.2 has been deleted, b is empty and should also been deleted
+            self.assertIsNotNone(v)
             self.fail("Key should not be found")
         except KeyError:
             pass

@@ -6,7 +6,12 @@ Created on 2014��11��12��
 '''
 
 from xml.etree import ElementTree
-from modules.module import ModuleFactory
+from modules import ModuleFactory
+from modules import FetchPageBuilder
+from modules import XPathFetchPageBuilder
+from modules import OutputBuilder
+from modules import RenameBuilder
+from modules import LoopBuilder
 from model import Context
 
 class Engine(object):
@@ -14,28 +19,39 @@ class Engine(object):
     classdocs
     '''
 
+    _module_factory = None
 
     def __init__(self):
         '''
         Constructor
         '''
+        self._module_factory = ModuleFactory()
+        # init inline module builders
+        
+        self._module_factory.registerModuleBuilder('fetchpage', FetchPageBuilder())
+        self._module_factory.registerModuleBuilder('xpathfetchpage', XPathFetchPageBuilder())
+        self._module_factory.registerModuleBuilder('output', OutputBuilder())
+        self._module_factory.registerModuleBuilder('rename', RenameBuilder())
+        self._module_factory.registerModuleBuilder('loop', LoopBuilder())
         
     def create(self, setting):
-        
-        return Job(setting)
+        return Job(self, setting)
 
         
 class Job(object):
     modules_tree_root = None
     
-    def __init__(self, setting):
+    def __init__(self, engine, setting):
         xml_doc = ElementTree.parse(setting)
         elements = xml_doc.findall("Parsing/modules/module")
         
         modules = {}
-        module_factory = ModuleFactory()
+        module_factory = engine._module_factory
+        build_context = {'engine': engine}
         for element in elements:
-            modules[element.get('id')] = module_factory.buildModule(element)
+            module = module_factory.buildModule(element.get('type'), element, build_context)
+            modules[element.get('id')] = module
+            module._engine = engine
         
         self.modules_tree_root = modules.pop('output')  # the root of module_tree must be 'output'
         self.__walk_through_tree(self.modules_tree_root, modules)

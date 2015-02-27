@@ -5,7 +5,7 @@ Created on 2014��11��28��
 @author: ���
 '''
 import unittest
-from feedin.modules.module import StringReplace
+from feedin.modules import StringReplaceBuilder
 from xml.etree import ElementTree
 from feedin.model import Context
 
@@ -18,7 +18,8 @@ class StringReplaceTest(unittest.TestCase):
         doc.attrib['Replace'] = 'abc'
         doc.attrib['With'] = "123"
         
-        self.target = StringReplace(doc)
+        builder = StringReplaceBuilder()
+        self.target = builder.build(doc)
         context = Context()
         context.items.append('abcddd')
         self.target.execute(context);
@@ -30,7 +31,8 @@ class StringReplaceTest(unittest.TestCase):
         doc.attrib['Replace'] = 'abc'
         doc.attrib['With'] = "123"
         
-        self.target = StringReplace(doc)
+        builder = StringReplaceBuilder()
+        self.target = builder.build(doc)
         context = Context()
         context.items.append('abcddd')
         context.items.append("abc")
@@ -46,7 +48,8 @@ class StringReplaceTest(unittest.TestCase):
         doc.attrib['Replace'] = 'abc'
         doc.attrib['With'] = "123"
         
-        self.target = StringReplace(doc)
+        builder = StringReplaceBuilder()
+        self.target = builder.build(doc)
         context = Context()
         context.items.append('abcddd')
         self.target.execute(context);

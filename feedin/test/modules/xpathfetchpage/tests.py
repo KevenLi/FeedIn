@@ -5,7 +5,7 @@ Created on 2014��11��12��
 @author: ���
 '''
 import unittest
-from feedin.modules.module import XPathFetchPage
+from feedin.modules import XPathFetchPageBuilder
 from xml.etree import ElementTree
 from feedin.model import Context
 
@@ -26,7 +26,8 @@ class Test(unittest.TestCase):
         doc.attrib['URL'] = 'http://guba.eastmoney.com/default_1.html'
         doc.attrib['ExtractXPath'] = "//ul[@class='newlist']/li"
         
-        self.target = XPathFetchPage(doc)
+        builder = XPathFetchPageBuilder()
+        self.target = builder.build(doc)
         context = Context()
         self.target.execute(context);
         print len(context.items)
@@ -38,7 +39,10 @@ class Test(unittest.TestCase):
         module_setting.attrib['type'] = 'xpathfetchpage'
         module_setting.attrib['URL'] = 'test.html'
         module_setting.attrib['ExtractXPath'] = "//div[@id='content']/table[@class='table1']/tr"
-        self.target= XPathFetchPage(module_setting)
+        
+        builder = XPathFetchPageBuilder()
+        self.target = builder.build(module_setting)
+        
         context = Context()
         self.target.execute(context);
         self.assertEqual(len(context.items), 3)
@@ -50,7 +54,10 @@ class Test(unittest.TestCase):
         module_setting.attrib['type'] = 'xpathfetchpage'
         module_setting.attrib['URL'] = 'test_mixtext_with_br.html'
         module_setting.attrib['ExtractXPath'] = "//div"
-        self.target= XPathFetchPage(module_setting)
+        
+        builder = XPathFetchPageBuilder()
+        self.target = builder.build(module_setting)
+
         context = Context()
         self.target.execute(context);
         self.assertEqual(len(context.items), 1)
@@ -63,7 +70,9 @@ class Test(unittest.TestCase):
         doc.attrib['URL'] = 'http://guba.eastmoney.com/default_1.html'
         doc.attrib['ExtractXPath'] = "//ul[@class='newlist']/li"
         
-        self.target = XPathFetchPage(doc)
+        builder = XPathFetchPageBuilder()
+        self.target = builder.build(doc)
+        
         context = Context(http_proxy = proxy)
         self.target.execute(context);
         print len(context.items)
