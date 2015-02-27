@@ -1,8 +1,4 @@
 from distutils.core import setup
-import sys
-
-sys.path.append('feedin')
-
 
 setup(name='feedin',
       version='0.1',
@@ -15,7 +11,6 @@ setup(name='feedin',
           easy configuration and has multiple build-in modules.',
       packages=['feedin'],
       provides=['feedin'],
-      required=['lxml'],
       keywords='web data python fetching',
       license='Apache License, Version 2.0',
       classifiers=['Development Status :: 3 - Alpha',
@@ -25,7 +20,11 @@ setup(name='feedin',
                    'Programming Language :: Python :: 2',
                    'License :: OSI Approved :: GNU Library or Lesser General Public License (LGPL)',
                    'License :: OSI Approved :: GNU Affero General Public License v3',
-                   'Topic :: Internet',
+                   'Topic :: Internet :: WWW/HTTP',
+                   'Topic :: Software Development :: Libraries :: Application Frameworks',
                    'Topic :: Software Development :: Libraries :: Python Modules',
                   ],
+      install_requires=[
+        'lxml',
+        ],
      )
