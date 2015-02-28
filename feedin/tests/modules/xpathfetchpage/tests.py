@@ -37,7 +37,7 @@ class Test(unittest.TestCase):
     def test_localfile_table(self):
         module_setting = ElementTree.Element("module")
         module_setting.attrib['type'] = 'xpathfetchpage'
-        module_setting.attrib['URL'] = 'https://raw.githubusercontent.com/kevenli/FeedIn/master/feedin/test/modules/xpathfetchpage/test.html'
+        module_setting.attrib['URL'] = 'https://raw.githubusercontent.com/kevenli/FeedIn/master/feedin/tests/modules/xpathfetchpage/test.html'
         module_setting.attrib['ExtractXPath'] = "//div[@id='content']/table[@class='table1']/tr"
         
         builder = XPathFetchPageBuilder()
@@ -52,7 +52,7 @@ class Test(unittest.TestCase):
     def test_mixtext_with_br(self):
         module_setting = ElementTree.Element("module")
         module_setting.attrib['type'] = 'xpathfetchpage'
-        module_setting.attrib['URL'] = 'https://raw.githubusercontent.com/kevenli/FeedIn/master/feedin/test/modules/xpathfetchpage/test_mixtext_with_br.html'
+        module_setting.attrib['URL'] = 'https://raw.githubusercontent.com/kevenli/FeedIn/master/feedin/tests/modules/xpathfetchpage/test_mixtext_with_br.html'
         module_setting.attrib['ExtractXPath'] = "//div"
         
         builder = XPathFetchPageBuilder()

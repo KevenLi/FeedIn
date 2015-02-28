@@ -12,7 +12,7 @@ setup(name='FeedIn',
       description='Web data fetching engine.',
       long_description='A web data fetching engine which can be used in \
           easy configuration and has multiple build-in modules.',
-      packages=find_packages(exclude=('test', 'test.*')),
+      packages=find_packages(exclude=('tests', 'tests.*')),
       provides=['feedin'],
       keywords='web data python fetching',
       license='Apache License, Version 2.0',
