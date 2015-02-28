@@ -16,7 +16,10 @@
 					<rule source="item.td.5.div.span" operator="rename" dest="researcher" />
 				</rules>
 			</module>
-			<module type="output" id="output" input="rename">			</module>
+			<module type="loop" id="loop" input="rename" ForEach="item" AssignTo="content">
+				<module type="xpathfetchpage" URL="item.url" ExtractXPath="//div[@class='blk_container']" ExtractMethod="text" />
+			</module>
+			<module type="output" id="output" input="loop">			</module>
 		</modules>
 	</Parsing>
 	<Schedule>
