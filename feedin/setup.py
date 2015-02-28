@@ -3,7 +3,7 @@ from setuptools import find_packages
 
 
 
-setup(name='feedin',
+setup(name='FeedIn',
       version='0.1',
       author='Keven Li',
       author_email='kevenli@users.noreply.github.com',
