@@ -15,6 +15,7 @@ class XPathFetchPage(Module):
     EXTRACT_TYPE_DICT = 'dict'
     EXTRACT_TYPE_TEXT = 'text'
     EXTRACT_TYPE_HTML = 'html'
+    CHARSETS = ['utf8', 'gb2312', 'GB18030']
     '''
     classdocs
     '''
@@ -43,8 +44,21 @@ class XPathFetchPage(Module):
             buf = StringIO(content)
             f = gzip.GzipFile(fileobj=buf)
             content = f.read()
+        
+        decoding_error = None  # last decoding error, will be raised if cannot decode the content
+        decoded_content = None # decoded
+        for charset in XPathFetchPage.CHARSETS:
+            try:
+                decoded_content = unicode(content, charset)
+            except UnicodeDecodeError as e:
+                decoding_error = e
+        
+        if not decoded_content and decoding_error:
+            raise decoding_error
+                
+                
             
-        root = html.fromstring(content)
+        root = html.fromstring(decoded_content)
         #root = doc.getroot()
         context.last_result = []
         for element in root.xpath(self.ExtractXPath):
