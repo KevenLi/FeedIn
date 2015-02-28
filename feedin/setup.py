@@ -1,4 +1,7 @@
 from distutils.core import setup
+from setuptools import find_packages
+
+
 
 setup(name='feedin',
       version='0.1',
@@ -9,7 +12,7 @@ setup(name='feedin',
       description='Web data fetching engine.',
       long_description='A web data fetching engine which can be used in \
           easy configuration and has multiple build-in modules.',
-      packages=['feedin'],
+      packages=find_packages(exclude=('test', 'test.*')),
       provides=['feedin'],
       keywords='web data python fetching',
       license='Apache License, Version 2.0',
