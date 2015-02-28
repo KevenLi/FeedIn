@@ -8,7 +8,11 @@ class Rename(Module):
         super(Rename, self).__init__(setting, context)
         self.rules = []
         for element in setting.find("rules"):
-            rule = {'source': element.get('source').lstrip('item.'),
+            source = element.get('source')
+            if source.find('item.') == 0:
+                source = source.replace('item.', '', 1)
+                
+            rule = {'source': source,
                     'operator': element.get('operator'),
                     'dest': element.get('dest') }
             self.rules.append(rule)

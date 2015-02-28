@@ -1,0 +1,28 @@
+
+<feed id="sina_finance_world">
+	<Parsing>
+		<modules>
+			<module type="xpathfetchpage" id="xpathfetchpage" 
+				URL="http://vip.stock.finance.sina.com.cn/q/go.php/vReport_List/kind/lastest/index.phtml" 
+				ExtractXPath="//div[@class='main']/table/tr[position()>2]" />
+			<module type="rename" id='rename' input="xpathfetchpage">
+				<rules>
+					<rule source="item.td.0" operator="rename" dest="index" />
+					<rule source="item.td.1.a.href" operator="copy" dest="url" />
+					<rule source="item.td.1.a" operator="rename" dest="title" />
+					<rule source="item.td.2" operator="rename" dest="category" />
+					<rule source="item.td.3" operator="rename" dest="date" />
+					<rule source="item.td.4.a.div.span" operator="rename" dest="org" />
+					<rule source="item.td.5.div.span" operator="rename" dest="researcher" />
+				</rules>
+			</module>
+			<module type="output" id="output" input="rename">			</module>
+		</modules>
+	</Parsing>
+	<Schedule>
+	
+	</Schedule>
+	<Push>
+	
+	</Push>
+</feed>
