@@ -8,7 +8,7 @@ class Loop(Module):
     def __init__(self, setting, context=None):
         super(Loop, self).__init__(setting, context)
         self.assign_to = setting['conf']['assign_to']['value']
-        self.module_setting = setting['conf']['embed']
+        self.module_setting = setting['conf']['embed']['value']
         engine = self._context['engine']
         self.module = engine._module_factory.buildModule(self.module_setting['type'], self.module_setting, None)
         

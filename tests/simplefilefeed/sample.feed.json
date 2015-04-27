@@ -1,52 +1,208 @@
 {
-	"modules":[
-		{
-			"id" : "_OUTPUT",
-			"type" : "output"
-		},
-		{
-			"id" : "xpathfetchpage",
-			"type" : "xpathfetchpage",
-			"conf" : {
-				"URL" : "http:\/\/guba.eastmoney.com\/default_1.html",
-				"xpath" : "\/\/ul[@class='newlist']\/li"
-			}
-		},
-		{
-			"id" : "rename",
-			"type" : "rename",
-			"conf": {
-				"items" : [
-					{"source" : "item.cite.0", "operator": "rename", "dest":"read"},
-					{"source" : "item.cite.1", "operator": "rename", "dest":"comments"},
-					{"source" : "item.span.a.1.title", "operator": "rename", "dest":"title"},
-					{"source" : "item.span.a.1.href", "operator": "rename", "dest":"url"},
-					{"source" : "item.span.a.0.content", "operator": "rename", "dest":"channel"},
-					{"source" : "item.cite.2", "operator": "rename", "dest":"author"}
-				]
-			}
-		}
-	],
-	"wires" : [
-		{
-			"src" : {
-				"id" : "_OUTPUT",
-				"moduleid" : "rename"
+			"layout": [{
+				"id": "sw-52",
+				"xy": [228,
+				85]
 			},
-			"tgt" : {
-				"id" : "_INPUT",
-				"moduleid" : "_OUTPUT"
-			}
-		},
-		{
-			"src" : {
-				"id" : "_OUTPUT",
-				"moduleid" : "xpathfetchpage"
+			{
+				"id": "_OUTPUT",
+				"xy": [765,
+				491]
 			},
-			"tgt" : {
-				"id" : "_INPUT",
-				"moduleid" : "rename"
-			}
+			{
+				"id": "sw-67",
+				"xy": [649,
+				153]
+			},
+			{
+				"id": "sw-87",
+				"xy": [177,
+				228]
+			}],
+			"modules": [{
+				"type": "xpathfetchpage",
+				"id": "sw-52",
+				"conf": {
+					"URL": {
+						"value": "http:\/\/guba.eastmoney.com\/default_1.html",
+						"type": "url"
+					},
+					"xpath": {
+						"value": "\/\/ul[@class='newlist']\/li",
+						"type": "text"
+					}
+				}
+			},
+			{
+				"type": "output",
+				"id": "_OUTPUT",
+				"conf": []
+			},
+			{
+				"type": "loop",
+				"id": "sw-67",
+				"conf": {
+					"with": {
+						"value": "",
+						"type": "text"
+					},
+					"embed": {
+						"value": {
+							"type": "xpathfetchpage",
+							"id": "sw-75",
+							"conf": {
+								"URL": {
+									"subkey": "url",
+									"type": "url"
+								},
+								"xpath": {
+									"value": "\/\/div[@id='zwcontent']",
+									"type": "text"
+								}
+							}
+						},
+						"type": "module"
+					},
+					"emit_part": {
+						"type": "text",
+						"value": "all"
+					},
+					"mode": {
+						"type": "text",
+						"value": "assign"
+					},
+					"assign_part": {
+						"type": "text",
+						"value": "all"
+					},
+					"assign_to": {
+						"value": "pagedetail",
+						"type": "text"
+					}
+				}
+			},
+			{
+				"type": "rename",
+				"id": "sw-87",
+				"conf": {
+					"RULE": [{
+						"field": {
+							"value": "cite.0",
+							"type": "text"
+						},
+						"op": {
+							"type": "text",
+							"value": "rename"
+						},
+						"newval": {
+							"value": "read",
+							"type": "text"
+						}
+					},
+					{
+						"field": {
+							"value": "cite.1",
+							"type": "text"
+						},
+						"op": {
+							"type": "text",
+							"value": "rename"
+						},
+						"newval": {
+							"value": "comments",
+							"type": "text"
+						}
+					},
+					{
+						"field": {
+							"value": "span.a.1.title",
+							"type": "text"
+						},
+						"op": {
+							"type": "text",
+							"value": "rename"
+						},
+						"newval": {
+							"value": "title",
+							"type": "text"
+						}
+					},
+					{
+						"field": {
+							"value": "span.a.1.href",
+							"type": "text"
+						},
+						"op": {
+							"type": "text",
+							"value": "rename"
+						},
+						"newval": {
+							"value": "url",
+							"type": "text"
+						}
+					},
+					{
+						"field": {
+							"value": "span.a.0.content",
+							"type": "text"
+						},
+						"op": {
+							"type": "text",
+							"value": "rename"
+						},
+						"newval": {
+							"value": "channel",
+							"type": "text"
+						}
+					},
+					{
+						"field": {
+							"value": "cite.2",
+							"type": "text"
+						},
+						"op": {
+							"type": "text",
+							"value": "rename"
+						},
+						"newval": {
+							"value": "author",
+							"type": "text"
+						}
+					}]
+				}
+			}],
+			"terminaldata": [],
+			"wires": [{
+				"id": "_w0",
+				"src": {
+					"id": "_OUTPUT",
+					"moduleid": "sw-52"
+				},
+				"tgt": {
+					"id": "_INPUT",
+					"moduleid": "sw-87"
+				}
+			},
+			{
+				"id": "_w1",
+				"src": {
+					"id": "_OUTPUT",
+					"moduleid": "sw-67"
+				},
+				"tgt": {
+					"id": "_INPUT",
+					"moduleid": "_OUTPUT"
+				}
+			},
+			{
+				"id": "_w2",
+				"src": {
+					"id": "_OUTPUT",
+					"moduleid": "sw-87"
+				},
+				"tgt": {
+					"id": "_INPUT",
+					"moduleid": "sw-67"
+				}
+			}]
 		}
-	]
-}

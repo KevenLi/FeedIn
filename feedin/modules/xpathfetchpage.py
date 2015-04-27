@@ -22,14 +22,16 @@ class XPathFetchPage(Module):
     def __init__(self, setting, context=None):
         super(XPathFetchPage, self).__init__(setting, context)
         self.URL = setting['conf']['URL']
-        self.ExtractXPath = setting['conf']['xpath']
+        self.ExtractXPath = setting['conf']['xpath']['value']
         self.ExtractMethod = setting['conf']['ExtractMethod'] if 'ExtractMethod' in setting['conf'] else XPathFetchPage.EXTRACT_TYPE_DICT
     
     def execute(self, context=None):
         url = self.URL
-        if url.startswith('item.') and context is not None:
-            key = url.lstrip('item.')
+        if 'subkey' in self.URL:   # a subkey assigned
+            key = self.URL['subkey'].lstrip('item.')
             url = context.items[0][key]
+        else:
+            url = self.URL['value']
         
         http_proxy = context.http_proxy
         if http_proxy:

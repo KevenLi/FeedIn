@@ -7,14 +7,14 @@ class Rename(Module):
     def __init__(self, setting, context=None):
         super(Rename, self).__init__(setting, context)
         self.rules = []
-        for element in setting['conf']["items"]:
-            source = element['source']
+        for element in setting['conf']["RULE"]:
+            source = element['field']['value']
             if source.find('item.') == 0:
                 source = source.replace('item.', '', 1)
                 
             rule = {'source': source,
-                    'operator': element['operator'],
-                    'dest': element['dest'] }
+                    'operator': element['op']['value'],
+                    'dest': element['newval']['value'] }
             self.rules.append(rule)
     
     def execute(self, context=None):

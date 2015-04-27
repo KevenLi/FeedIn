@@ -26,8 +26,8 @@ class XPathFetchPageTest(unittest.TestCase):
                   'type':'xpathfetchpage',
                   'conf':{}
                   }
-        module_setting['conf']['URL'] = 'http://guba.eastmoney.com/default_1.html'
-        module_setting['conf']['xpath'] = "//ul[@class='newlist']/li"
+        module_setting['conf']['URL'] = {'value' :'http://guba.eastmoney.com/default_1.html'}
+        module_setting['conf']['xpath'] = {'value' : "//ul[@class='newlist']/li"}
         
         builder = XPathFetchPageBuilder()
         self.target = builder.build(module_setting)
@@ -44,8 +44,8 @@ class XPathFetchPageTest(unittest.TestCase):
                           'conf':{}
                           }
                 
-        module_setting['conf']['URL'] = 'https://raw.githubusercontent.com/kevenli/FeedIn/master/tests/modules/xpathfetchpage/test.html'
-        module_setting['conf']['xpath'] = "//div[@id='content']/table[@class='table1']/tr"
+        module_setting['conf']['URL'] = {'value': 'https://raw.githubusercontent.com/kevenli/FeedIn/master/tests/modules/xpathfetchpage/test.html'}
+        module_setting['conf']['xpath'] = {'value': "//div[@id='content']/table[@class='table1']/tr"}
         
         builder = XPathFetchPageBuilder()
         self.target = builder.build(module_setting)
@@ -62,8 +62,8 @@ class XPathFetchPageTest(unittest.TestCase):
                           'type':'xpathfetchpage',
                           'conf':{}
                           }
-        module_setting['conf']['URL'] = 'https://raw.githubusercontent.com/kevenli/FeedIn/master/tests/modules/xpathfetchpage/test_mixtext_with_br.html'
-        module_setting['conf']['xpath'] = "//div"
+        module_setting['conf']['URL'] = {'value': 'https://raw.githubusercontent.com/kevenli/FeedIn/master/tests/modules/xpathfetchpage/test_mixtext_with_br.html'}
+        module_setting['conf']['xpath'] = {'value': "//div"}
         
         builder = XPathFetchPageBuilder()
         self.target = builder.build(module_setting)

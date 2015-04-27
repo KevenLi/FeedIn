@@ -31,7 +31,8 @@ class SimpleFileFeedTest(unittest.TestCase):
         feedjob.execute()
         print feedjob.context.items
         for item in feedjob.context.items:
-            print item.text('read'), item.text('comments'), item.text('title'), item.text('url'), item.text('channel'), item.text('author')
+            print item.text('read'), item.text('comments'), item.text('title'), \
+                item.text('url'), item.text('channel'), item.text('author'), item.text("pagedetail")
 
     def test_fetchonly(self):
         setting_file = 'fetchonly.feed.json'
@@ -58,5 +59,5 @@ class SimpleFileFeedTest(unittest.TestCase):
 
 
 if __name__ == "__main__":
-    import sys;sys.argv = ['', 'SimpleFileFeedTest.test_loop']
+    import sys;sys.argv = ['', 'SimpleFileFeedTest.test_start']
     unittest.main()
