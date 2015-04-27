@@ -23,6 +23,8 @@ class XPathFetchPage(Module):
         super(XPathFetchPage, self).__init__(setting, context)
         self.URL = setting['conf']['URL']
         self.ExtractXPath = setting['conf']['xpath']['value']
+        self.html5 = setting['conf']['html']['value'] == 'true' if 'html5' in setting['conf'] else False
+        self.useAsString = setting['conf']['useAsString']['value'] == 'true' if 'useAsString' in setting['conf'] else False
         self.ExtractMethod = setting['conf']['ExtractMethod'] if 'ExtractMethod' in setting['conf'] else XPathFetchPage.EXTRACT_TYPE_DICT
     
     def execute(self, context=None):
