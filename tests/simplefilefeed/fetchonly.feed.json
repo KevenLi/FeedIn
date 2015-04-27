@@ -1,0 +1,12 @@
+{
+	"modules":[
+		{
+			"type" : "xpathfetchpage",
+			"id" : "_OUTPUT",
+			"conf" : {
+				"URL" : "http:\/\/guba.eastmoney.com\/default_1.html",
+				"xpath" : "\/\/ul[@class='newlist']\/li"
+			}
+		}
+	]
+}

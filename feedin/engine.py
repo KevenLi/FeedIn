@@ -13,6 +13,7 @@ from modules import OutputBuilder
 from modules import RenameBuilder
 from modules import LoopBuilder
 from model import Context
+import json
 
 class Engine(object):
     '''
@@ -40,23 +41,34 @@ class Engine(object):
         
 class Job(object):
     modules_tree_root = None
+    modules = {}
     
     def __init__(self, engine, setting):
-        xml_doc = ElementTree.parse(setting)
-        elements = xml_doc.findall("Parsing/modules/module")
+        feed_setting = json.loads(setting)
+        module_settings = feed_setting['modules']
         
         modules = {}
         module_factory = engine._module_factory
         build_context = {'engine': engine}
-        for element in elements:
-            module = module_factory.buildModule(element.get('type'), element, build_context)
-            modules[element.get('id')] = module
+        for module_setting in module_settings:
+            module = module_factory.buildModule(module_setting['type'], module_setting, build_context)
+            modules[module._id] = module
             module._engine = engine
+        self.modules = modules
         
-        self.modules_tree_root = modules.pop('output')  # the root of module_tree must be 'output'
-        self.__walk_through_tree(self.modules_tree_root, modules)
+        
+        #self.__walk_through_tree(self.modules_tree_root, modules)
             
-        pass
+        if 'wires' in feed_setting:
+            wire_settings = feed_setting['wires']
+            for wire_setting in wire_settings:
+                module = modules[wire_setting['tgt']['moduleid']]
+                module.input_name = wire_setting['src']['moduleid']
+            
+        self.modules_tree_root = modules.pop('_OUTPUT')  # the root of module_tree must be 'output'
+        
+        self.__walk_through_tree(self.modules_tree_root, modules)
+        
     
     def __walk_through_tree(self, module_node = None, module_dict = None):
         if module_node.input_name:

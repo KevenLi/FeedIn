@@ -7,12 +7,10 @@ from feedin import DotDict2
 class Loop(Module):
     def __init__(self, setting, context=None):
         super(Loop, self).__init__(setting, context)
-        self.for_each = setting.get("ForEach")
-        self.assign_which = setting.get("AssignWhich") # not use yet
-        self.assign_to = setting.get("AssignTo")
-        self.module_setting = setting.find("module")
+        self.assign_to = setting['conf']['assign_to']['value']
+        self.module_setting = setting['conf']['embed']
         engine = self._context['engine']
-        self.module = engine._module_factory.buildModule(self.module_setting.get('type'), self.module_setting, None)
+        self.module = engine._module_factory.buildModule(self.module_setting['type'], self.module_setting, None)
         
     def execute(self, context=None):
         for item in context.items:

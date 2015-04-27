@@ -22,10 +22,10 @@ class Module(object):
     '''
     _dependents = None
     _context = None
+    input_name = None
 
     def __init__(self, module_setting, context=None):
-        self._id = module_setting.get('id')
-        self.input_name = module_setting.get('input', None)
+        self._id = module_setting['id']
         self._dependents = []
         self._context = context
 

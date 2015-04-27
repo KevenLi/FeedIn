@@ -1,0 +1,92 @@
+{
+	"modules" : [
+		{
+			"id" : "xpathfetchpage",
+			"type" : "xpathfetchpage",
+			"conf" : {
+				"URL" : "http:\/\/guba.eastmoney.com\/default_1.html",
+				"xpath" : "//ul[@class='newlist']/li"
+			}
+		},
+		{
+			"id" : "rename",
+			"type" : "rename",
+			"conf" : {
+				"items" : [
+					{"source" : "item.cite.0", "operator" : "rename", "dest" : "read"},
+					{"source" : "item.cite.1", "operator" : "rename", "dest" : "comments"},
+					{"source" : "item.span.a.1.title", "operator" : "rename", "dest" : "title"},
+					{"source" : "item.span.a.1.href", "operator" : "rename", "dest" : "url"},
+					{"source" : "item.span.a.0.content", "operator" : "rename", "dest" : "channel"},
+					{"source" : "item.cite.2", "operator" : "rename", "dest" : "author"}
+				]
+			}
+		},
+		{
+			"id" : "loop",
+			"type" : "loop",
+			"conf" : {
+				"embed" : {
+					"id": "xpathfetchpage2", 
+					"type": "xpathfetchpage",
+					"conf" : {
+						"URL" : "item.url",
+						"xpath" : "\/\/div[@class='stockcodec']"
+					}
+				},
+				"emit_part": {
+					"type": "text",
+					"value": "all"
+				},
+				"mode": {
+					"type": "text",
+					"value": "assign"
+				},
+				"assign_part": {
+					"type": "text",
+					"value": "all"
+				},
+				"assign_to": {
+					"value": "pagedetail",
+					"type": "text"
+				}
+			}
+		},
+		{
+			"id" : "_OUTPUT",
+			"type" : "output"
+		}
+	],
+	"wires" : [
+		{
+			"src" : {
+				"id" : "_OUTPUT",
+				"moduleid" : "xpathfetchpage"
+			},
+			"tgt" : {
+				"id" : "_INPUT", 
+				"moduleid" : "rename"
+			}
+		},
+		{
+			"src" : {
+				"id" : "_OUTPUT", 
+				"moduleid" : "rename"
+			},
+			"tgt" : {
+				"id" : "_INPUT",
+				"moduleid" : "loop"
+			}
+		},
+		{
+			"src" : {
+				"id" : "_OUTPUT",
+				"moduleid" : "loop"
+			},
+			"tgt" : {
+				"id" : "_INPUT",
+				"moduleid" : "_OUTPUT"
+			}
+		}
+	]
+}

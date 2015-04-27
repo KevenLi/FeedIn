@@ -6,33 +6,38 @@ Created on 2014��11��28��
 '''
 import unittest
 from feedin.modules import StringReplaceBuilder
-from xml.etree import ElementTree
 from feedin.model import Context
 
 class StringReplaceTest(unittest.TestCase):
 
 
     def test_execute_string(self):
-        doc = ElementTree.Element("module")
-        doc.attrib['type'] = 'stringreplace'
-        doc.attrib['Replace'] = 'abc'
-        doc.attrib['With'] = "123"
+        module_setting = {
+                          'id' : 'stringreplace',
+                          'type' : 'stringreplace',
+                          'conf' : {}
+                          }
+        module_setting['conf']['Replace'] = 'abc'
+        module_setting['conf']['With'] = "123"
         
         builder = StringReplaceBuilder()
-        self.target = builder.build(doc)
+        self.target = builder.build(module_setting)
         context = Context()
         context.items.append('abcddd')
         self.target.execute(context);
         self.assertEqual(context.items[0], '123ddd')
         
     def test_execute_string_multi(self):
-        doc = ElementTree.Element("module")
-        doc.attrib['type'] = 'stringreplace'
-        doc.attrib['Replace'] = 'abc'
-        doc.attrib['With'] = "123"
+        module_setting = {
+                  'id' : 'stringreplace',
+                  'type' : 'stringreplace',
+                  'conf' : {}
+                  }
+        module_setting['conf']['Replace'] = 'abc'
+        module_setting['conf']['With'] = "123"
         
         builder = StringReplaceBuilder()
-        self.target = builder.build(doc)
+        self.target = builder.build(module_setting)
         context = Context()
         context.items.append('abcddd')
         context.items.append("abc")
@@ -43,13 +48,16 @@ class StringReplaceTest(unittest.TestCase):
         self.assertEqual(context.items[2], 'ddd')
     
     def test_execute_dotdict2(self):
-        doc = ElementTree.Element("module")
-        doc.attrib['type'] = 'stringreplace'
-        doc.attrib['Replace'] = 'abc'
-        doc.attrib['With'] = "123"
+        module_setting = {
+              'id' : 'stringreplace',
+              'type' : 'stringreplace',
+              'conf' : {}
+          }
+        module_setting['conf']['Replace'] = 'abc'
+        module_setting['conf']['With'] = "123"
         
         builder = StringReplaceBuilder()
-        self.target = builder.build(doc)
+        self.target = builder.build(module_setting)
         context = Context()
         context.items.append('abcddd')
         self.target.execute(context);

@@ -5,8 +5,8 @@ from module import Module, ModuleBuilder
 class StringReplace(Module):
     def __init__(self, setting, context=None):
         super(StringReplace, self).__init__(setting, context)
-        self.replace = setting.get("Replace")
-        self.withStr = setting.get("With")
+        self.replace = setting['conf']["Replace"]
+        self.withStr = setting['conf']["With"]
     
     def execute(self, context=None):
         for i in range(len(context.items)):

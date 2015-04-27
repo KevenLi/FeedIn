@@ -14,11 +14,7 @@
 				<module type="xpathfetchpage" URL="item.url" ExtractXPath="//div[@id='artibody']" ExtractMethod="text" />
 			</module>
 			<module type="output" id="output" input="loop">
-				<fields>
-					<field name='title' />
-					<field name='url' />
-					<field name='content' />
-				</fields>
+
 			</module>
 			
 			<!-- specify output fields, output type (update only) -->

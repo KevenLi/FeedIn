@@ -21,9 +21,9 @@ class XPathFetchPage(Module):
     '''
     def __init__(self, setting, context=None):
         super(XPathFetchPage, self).__init__(setting, context)
-        self.URL = setting.get("URL")
-        self.ExtractXPath = setting.get("ExtractXPath")
-        self.ExtractMethod =  setting.get("ExtractMethod", XPathFetchPage.EXTRACT_TYPE_DICT)
+        self.URL = setting['conf']['URL']
+        self.ExtractXPath = setting['conf']['xpath']
+        self.ExtractMethod = setting['conf']['ExtractMethod'] if 'ExtractMethod' in setting['conf'] else XPathFetchPage.EXTRACT_TYPE_DICT
     
     def execute(self, context=None):
         url = self.URL

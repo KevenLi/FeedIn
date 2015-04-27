@@ -9,7 +9,8 @@ class Output(Module):
         
     def __init__(self, setting, context=None):
         super(Output, self).__init__(setting, context)
-        fields = setting.find('fields')
+        conf = setting['conf'] if 'conf' in setting else {}
+        fields = conf['fields'] if 'fields' in conf else None
         if fields is not None:
             for field_setting in fields:
                 self.fields.append(self.OutputField(field_setting))

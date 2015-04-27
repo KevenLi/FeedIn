@@ -20,6 +20,7 @@ class Context:
         if 'http_proxy' in kwargs:
             self.http_proxy = kwargs['http_proxy']
         
+        
 class Feed:
     
     def __init__(self, setting):

@@ -6,7 +6,6 @@ Created on 2014��12��3��
 '''
 import unittest
 from feedin.modules import OutputBuilder
-from xml.etree import ElementTree
 from feedin import Context
 from feedin import DotDict2
 
@@ -14,9 +13,12 @@ from feedin import DotDict2
 class Test(unittest.TestCase):
     
     def test_output_default_output(self):
-        setting = ElementTree.Element("module")
-        setting.attrib['type'] = 'output'
-        
+        module_setting = {
+                          'id' : 'output',
+                          'type': 'output',
+                          'conf' : {}
+                          }
+       
         item1 = DotDict2()
         item1['a'] = 'a content'
         item1['b.1'] = 'b content'
@@ -25,19 +27,21 @@ class Test(unittest.TestCase):
         context.items.append(item1)
         
         builder = OutputBuilder()
-        self.target = builder.build(setting)
+        self.target = builder.build(module_setting)
         self.target.execute(context)
         
         self.assertEqual(context.items[0]['a'], 'a content')
         self.assertEqual(context.items[0]['b'], 'b content')
 
     def test_output_depth_default(self):
-        doc = ElementTree.Element("module")
-        doc.attrib['type'] = 'output'
-        # attrib['depth'] default to 1, only output the first depth        
+        module_setting = {
+                  'id' : 'output',
+                  'type': 'output',
+                  'conf' : {}
+                  }    
                 
         builder = OutputBuilder()
-        self.target = builder.build(doc)
+        self.target = builder.build(module_setting)
         context = Context()
         item = DotDict2() # dict item
         item['a.1.b'] = 'd'
