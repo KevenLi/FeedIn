@@ -4,21 +4,105 @@
 			"id" : "xpathfetchpage",
 			"type" : "xpathfetchpage",
 			"conf" : {
-				"URL" : "http:\/\/guba.eastmoney.com\/default_1.html",
-				"xpath" : "//ul[@class='newlist']/li"
+				"URL" : {
+					"value" : "http:\/\/guba.eastmoney.com\/default_1.html",
+					"type" : "text"
+					},
+				"xpath" : {
+					"value" : "//ul[@class='newlist']/li",
+					"type" : "text"
+					}
 			}
 		},
 		{
 			"id" : "rename",
 			"type" : "rename",
 			"conf" : {
-				"items" : [
-					{"source" : "item.cite.0", "operator" : "rename", "dest" : "read"},
-					{"source" : "item.cite.1", "operator" : "rename", "dest" : "comments"},
-					{"source" : "item.span.a.1.title", "operator" : "rename", "dest" : "title"},
-					{"source" : "item.span.a.1.href", "operator" : "rename", "dest" : "url"},
-					{"source" : "item.span.a.0.content", "operator" : "rename", "dest" : "channel"},
-					{"source" : "item.cite.2", "operator" : "rename", "dest" : "author"}
+				"RULE" : [
+					{
+						"field" : {
+							"value": "item.cite.0",
+							"type": "text"
+							}, 			
+						"op" :{ 
+							"value": "rename",
+							"type": "text"
+							}, 
+						"newval" :{ 
+							"value" : "read",
+							"type" : "text"
+							}
+						},
+					{
+						"field" : {
+							"value" : "item.cite.1",
+							"type" : "text"
+							}, 			
+						"op" : {
+							"value" : "rename",
+							"type" : "text"
+							}, 
+						"newval" : {
+							"value": "comments",
+							"type" : "text"
+							}
+						},
+					{
+						"field" : {
+							"value" : "item.span.a.1.title",
+							"type" : "text"
+							} ,
+						"op" : {
+							"value" : "rename",
+							"type" : "text"
+							}, 
+						"newval" : {
+							"value" : "title", 
+							"type" : "text"
+							}
+						},
+					{
+						"field" : {
+							"value" : "item.span.a.1.href",
+							"type" : "text"
+							}, 	
+						"op" : {
+							"value" : "rename",
+							"type" : "text"
+							}, 
+						"newval" : {
+							"value" : "url",
+							"type" : "text"
+							}
+						},
+					{
+						"field" : {
+							"value" : "item.span.a.0.content",
+							"type" : "text"
+							}, 		
+						"op" : {
+							"value" : "rename",
+							"type" : "text"
+							}, 
+						"newval" : {
+							"value" : "channel",
+							"type" : "text"
+							}
+						},
+					{
+						"field" : {
+							"value" : "item.cite.2",
+							"type" : "text"
+							}, 
+						"op" : 	{
+							"value" : "rename",
+							"type" : "text"
+							}, 
+						"newval" : {
+							"value" : "author",
+							"type" : "text"
+							}
+						}
 				]
 			}
 		},
@@ -27,11 +111,19 @@
 			"type" : "loop",
 			"conf" : {
 				"embed" : {
-					"id": "xpathfetchpage2", 
-					"type": "xpathfetchpage",
-					"conf" : {
-						"URL" : "item.url",
-						"xpath" : "\/\/div[@class='stockcodec']"
+					"value" : {
+						"id": "xpathfetchpage2", 
+						"type": "xpathfetchpage",
+						"conf" : {
+							"URL" : {
+								"subkey" : "item.url",
+								"type" : "url"
+								},
+							"xpath" : {
+								"value" : "\/\/div[@class='stockcodec']",
+								"type" : "text"
+								}
+						}
 					}
 				},
 				"emit_part": {

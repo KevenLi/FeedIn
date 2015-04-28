@@ -4,8 +4,14 @@
 			"type" : "xpathfetchpage",
 			"id" : "_OUTPUT",
 			"conf" : {
-				"URL" : "http:\/\/guba.eastmoney.com\/default_1.html",
-				"xpath" : "\/\/ul[@class='newlist']\/li"
+				"URL" : {
+					"value" : "http:\/\/guba.eastmoney.com\/default_1.html",
+					"type" : "text"
+					},
+				"xpath" : {
+					"value" : "\/\/ul[@class='newlist']\/li",
+					"type" : "text"
+					}
 			}
 		}
 	]
