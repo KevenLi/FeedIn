@@ -66,7 +66,7 @@ class XPathFetchPage(Module):
         comments = root.xpath('//comment()')
         for c in comments:
             p = c.getparent()
-            if p:
+            if p is not None:
                 p.remove(c)
         #root = doc.getroot()
         context.last_result = []
