@@ -28,10 +28,10 @@ class Output(Module):
                 for key in item.keys():
                     if key not in field_names:
                         item.delete(key)
-        else:
-            for item in context.items:
-                for key in item.keys():
-                    item[key] = item.text(key)
+#         else:
+#             for item in context.items:
+#                 for key in item.keys():
+#                     item[key] = item.text(key)
 
         pass
     

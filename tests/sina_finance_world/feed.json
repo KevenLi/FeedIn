@@ -1,0 +1,146 @@
+{
+	"modules":[
+		{
+			"id": "xpathfetchpage",
+			"type": "xpathfetchpage",
+			"conf" : {
+				"URL" : {
+					"value" : "http://finance.sina.com.cn/world/",
+					"type" : "text"
+				},
+				"xpath" : {
+					"value" : "//ul[@class='list_00f_f14']/li", 
+					"type" : "text"
+				}
+			}
+		},
+		{
+			"id" : "rename", 
+			"type" : "rename",
+			"conf" : {
+				"RULE" : [
+					{
+						"field" : {
+							"value" : "item.a.href",
+							"type" : "text"
+							},
+						"op" : {
+							"value" : "copy", 
+							"type" : "text"
+						}, 
+						"newval" : {
+							"value" : "_id", 
+							"type" : "text"
+						}
+					},
+					{
+						"field" : {
+							"value" : "item.a.href",
+							"type" : "text"
+						},
+						"op" : {
+							"value" : "rename", 
+							"type" : "text"
+						},
+						"newval": {
+							"value" : "url",
+							"type" : "text"
+						}
+					},
+					{
+						"field" : {
+							"value" : "item.a.content", 
+							"type" : "text"
+						},
+						"op" : {
+							"value" : "rename",
+							"type" : "text"
+						},
+						"newval" : {
+							"value" : "title", 
+							"type" : "text"
+						}
+					}
+				]
+			}
+		},
+		{
+			"id": "loop", 
+			"type" : "loop", 
+			"conf" : {
+				"embed" : {
+					"value" : {
+						"id" : "xpathfetchpage2", 
+						"type" : "xpathfetchpage", 
+						"conf" : {
+							"URL" : {
+								"subkey" : "item.url", 
+								"type" : "url"
+							},
+							"xpath" : {
+								"value" : "//div[@id='artibody']", 
+								"type" : "text"
+							},
+							"useAsString" : {
+								"value" : "true",
+								"type" : "text"
+							}
+						}
+					}
+				},
+				"emit_part": {
+					"type": "text",
+					"value": "all"
+				},
+				"mode": {
+					"type": "text",
+					"value": "assign"
+				},
+				"assign_part": {
+					"type": "text",
+					"value": "all"
+				},
+				"assign_to": {
+					"value": "description",
+					"type": "text"
+				}
+			}
+		},
+		{
+			"id" : "_OUTPUT",
+			"type" : "output"
+		}
+	], 
+	"wires" : [
+		{
+			"src" : {
+				"id" : "_OUTPUT",
+				"moduleid" : "xpathfetchpage"
+			},
+			"tgt" : {
+				"id" : "_INPUT", 
+				"moduleid" : "rename"
+			}
+		},
+		{
+			"src" : {
+				"id" : "_OUTPUT", 
+				"moduleid" : "rename"
+			},
+			"tgt" : {
+				"id" : "_INPUT",
+				"moduleid" : "loop"
+			}
+		},
+		{
+			"src" : {
+				"id" : "_OUTPUT",
+				"moduleid" : "loop"
+			},
+			"tgt" : {
+				"id" : "_INPUT",
+				"moduleid" : "_OUTPUT"
+			}
+		}
+	]
+}

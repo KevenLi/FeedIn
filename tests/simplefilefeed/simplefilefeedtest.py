@@ -67,5 +67,5 @@ class SimpleFileFeedTest(unittest.TestCase):
 
 
 if __name__ == "__main__":
-    import sys;sys.argv = ['', 'SimpleFileFeedTest.test_start']
+    import sys;sys.argv = ['', 'SimpleFileFeedTest.test_loop']
     unittest.main()

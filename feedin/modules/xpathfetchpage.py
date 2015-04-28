@@ -63,6 +63,11 @@ class XPathFetchPage(Module):
                 
             
         root = html.fromstring(decoded_content)
+        comments = root.xpath('//comment()')
+        for c in comments:
+            p = c.getparent()
+            if p:
+                p.remove(c)
         #root = doc.getroot()
         context.last_result = []
         for element in root.xpath(self.ExtractXPath):
@@ -71,7 +76,7 @@ class XPathFetchPage(Module):
             
             if self.ExtractMethod == XPathFetchPage.EXTRACT_TYPE_TEXT:
                 new_item =  etree.tostring(element, method='text', encoding=unicode)
-            elif self.ExtractMethod == XPathFetchPage.EXTRACT_TYPE_HTML:
+            elif self.useAsString == True:
                 new_item =  etree.tostring(element, method='html', encoding=unicode)
             else:
                 element_dic = util.etree_to_dict2(element)
