@@ -29,5 +29,6 @@ setup(name='FeedIn',
                   ],
       install_requires=[
         'lxml',
+        'BeautifulSoup',
         ],
      )

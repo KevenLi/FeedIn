@@ -10,6 +10,7 @@ from lxml import etree
 from feedin import util
 from feedin.dotdict2 import DotDict2
 from module import ModuleBuilder
+from BeautifulSoup import UnicodeDammit
 
 class XPathFetchPage(Module):
     EXTRACT_TYPE_DICT = 'dict'
@@ -49,20 +50,14 @@ class XPathFetchPage(Module):
             f = gzip.GzipFile(fileobj=buf)
             content = f.read()
         
-        decoding_error = None  # last decoding error, will be raised if cannot decode the content
-        decoded_content = None # decoded
-        for charset in XPathFetchPage.CHARSETS:
-            try:
-                decoded_content = unicode(content, charset)
-            except UnicodeDecodeError as e:
-                decoding_error = e
-        
-        if not decoded_content and decoding_error:
-            raise decoding_error
-                
-                
-            
-        root = html.fromstring(decoded_content)
+        converted = UnicodeDammit(content, isHTML=True, overrideEncodings=['gbk'])
+        if not converted.unicode:
+            raise UnicodeDecodeError(
+                    "Failed to detect encoding, tried [%s]",
+                    ', '.join(converted.triedEncodings))
+            # print converted.originalEncoding
+
+        root = html.fromstring(converted.unicode)
         comments = root.xpath('//comment()')
         for c in comments:
             p = c.getparent()
@@ -73,11 +68,11 @@ class XPathFetchPage(Module):
         for element in root.xpath(self.ExtractXPath):
             for link_element in element.iter("a"):
                 link_element.set("href", urlparse.urljoin(url, link_element.get("href")))
-            
+        
             if self.ExtractMethod == XPathFetchPage.EXTRACT_TYPE_TEXT:
-                new_item =  etree.tostring(element, method='text', encoding=unicode)
+                new_item = etree.tostring(element, method='text', encoding=unicode)
             elif self.useAsString == True:
-                new_item =  etree.tostring(element, method='html', encoding=unicode)
+                new_item = etree.tostring(element, method='html', encoding=unicode)
             else:
                 element_dic = util.etree_to_dict2(element)
                 new_item = DotDict2(element_dic)
