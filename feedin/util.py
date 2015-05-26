@@ -106,7 +106,12 @@ def etree_to_dict2(element, parent=None):
 
     todo: further investigate white space and multivalue handling
     """
-    i = DotDict2(element.attrib)
+    IGNORE_ATTRIBUTES = ['class', 'target']
+    attributes = {}
+    for (k,v) in element.attrib.items():
+        if k not in IGNORE_ATTRIBUTES:
+            attributes[k] = v
+    i = DotDict2(attributes)
     content = element.text.strip() if element.text else None
     i.update({'content': content}) if content else None
 

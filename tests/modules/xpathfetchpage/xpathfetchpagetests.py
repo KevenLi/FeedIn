@@ -35,7 +35,7 @@ class XPathFetchPageTest(unittest.TestCase):
         self.target.execute(context);
         print len(context.items)
         self.assertTrue(len(context.items) > 0, "Cannot retrieve elements in page")
-        print context
+        print context.items
     
     def test_localfile_table(self):
         module_setting = {
@@ -97,5 +97,5 @@ class XPathFetchPageTest(unittest.TestCase):
 #         print context.items
 
 if __name__ == "__main__":
-    #import sys;sys.argv = ['', 'Test.test_proxy']
+    import sys;sys.argv = ['', 'XPathFetchPageTest.test_xpath']
     unittest.main()
