@@ -97,5 +97,5 @@ class XPathFetchPageTest(unittest.TestCase):
 #         print context.items
 
 if __name__ == "__main__":
-    import sys;sys.argv = ['', 'XPathFetchPageTest.test_xpath']
+    import sys;sys.argv = ['', 'XPathFetchPageTest.test_localfile_table']
     unittest.main()

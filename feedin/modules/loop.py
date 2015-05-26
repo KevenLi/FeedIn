@@ -26,6 +26,8 @@ class Loop(Module):
                 pass
             elif len(loop_context.last_result) == 1:
                 item[self.assign_to] = loop_context.last_result[0]
+            elif isinstance(loop_context.last_result, list):
+                item[self.assign_to] = loop_context.last_result[0]
             else:
                 item[self.assign_to] = DotDict2(loop_context.last_result)
             
